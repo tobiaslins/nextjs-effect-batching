@@ -29,19 +29,6 @@ const flush = async () => {
   }
 };
 
-export async function GET(request: Request): Promise<Response> {
-  buffer.push({ get: true });
-
-  if (!timer) {
-    const p = new Promise<void>((r) => (leaderResolve = r));
-    timer = setTimeout(flush, 5000);
-    await p;
-    return Response.json({ ok: true });
-  }
-
-  return new Response(null, { status: 201 });
-}
-
 export async function POST(request: Request): Promise<Response> {
   const body = await request.json();
   buffer.push(body);
